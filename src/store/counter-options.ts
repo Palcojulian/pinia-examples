@@ -17,7 +17,7 @@ export const useCounterOptionsStore = defineStore('counterOptions', {
 
     actions: {
         incrementBy(value: number) {
-            this.count *= value;
+            this.count += value;
             this.lastChanged = new Date();
         },
         increment() {
