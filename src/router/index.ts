@@ -5,9 +5,14 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/counterOne',
       name: 'counterOne',
       component: () => import("@/counter/pages/CounterOnePage.vue")
+    },
+    {
+      path: '/counterTwo',
+      name: 'counterTwo',
+      component: ()=> import('@/counter/pages/CounterTwoPage.vue')
     }
   ]
 })
