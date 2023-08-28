@@ -16,7 +16,7 @@ import IconPinia from '@/shared/components/icons/pinia-icon.vue'
         <RouterLink to="/">Counter Options</RouterLink>
         <RouterLink to="/counterTwo">Counter Setup</RouterLink>
         <RouterLink to="/clients">Clientes</RouterLink>
-        
+        <RouterLink to="/testForms">Usando veeValidate</RouterLink>
       </nav>
     </div>
   </header>

@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -28,9 +27,14 @@ const router = createRouter({
         {
           path: '/clients/:id',
           name: 'client-id',
-          component: () => import('@/clients/pages/ClientPage.vue')
+          component: () => import('@/clients/pages/ClientPage.vue'),
         }
       ]
+    },
+    {
+      path: '/testForms',
+      name: 'formTest',
+      component: () => import('@/form-validate/pages/Form.vue'),
     }
   ]
 })
