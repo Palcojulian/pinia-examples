@@ -22,8 +22,11 @@ export const useClientsStore = defineStore('clients', () => {
         setClients(newClients: Client[]) {
             clients.value = newClients;
         },
+        
         setPage(page: number) {
-            if (currentPage.value == page) return;
+            if (currentPage.value === page) return;
+            if (page <= 0) return;
+            
             currentPage.value = page;
         }
     }

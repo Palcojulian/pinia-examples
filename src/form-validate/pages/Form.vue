@@ -1,7 +1,8 @@
 <script setup lang='ts'>
+// import * as Yup from 'yup';
 import { useForm } from 'vee-validate';
-import DynamicForm from '@/form-validate/components/DynamicForm.vue'
 
+import DynamicForm from '@/form-validate/components/DynamicForm.vue'
 
 const { values, defineInputBinds } = useForm();
 const email = defineInputBinds('email');
@@ -12,6 +13,7 @@ const formSchema = {
             label: 'Your Name',
             name: 'name',
             as: 'input',
+            // rules: Yup.string().required(),
         },
         {
             label: 'Your Email',
@@ -22,6 +24,7 @@ const formSchema = {
             label: 'Your Password',
             name: 'password',
             as: 'input',
+            type: 'password',
         },
     ],
 }

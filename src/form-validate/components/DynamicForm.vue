@@ -5,11 +5,12 @@ interface field{
     label:  string;
     name:   string;
     as:     string;
+    type?:  string;
 }
 
 interface Props {
     schema: {
-        fields: field[];
+        fields: any[];
     }
 }
 
@@ -20,9 +21,15 @@ const props = defineProps<Props>();
 <template>
     <Form>
         <div class="d-flex flex-column"
-            v-for='field in schema.fields' :key="field.name">
-            <label :for="field.name">{{ field.name }}</label>
-            <Field :as="field.as" :id="field.name" :name="field.name"/>
+            v-for='{as, name, label, ...attrs } in schema.fields' :key="name">
+            <label class="bg-primary rounded-top text-center" :for="name">{{ label }}</label>
+            <Field 
+                class="rounded-bottom mb-2 border-0 text-center" 
+                :as="as" 
+                :id="name" 
+                :name="name"
+                v-binds="attrs"
+            />
         </div>
 
         <button>Enviar</button>
