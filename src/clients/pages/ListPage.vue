@@ -19,7 +19,6 @@ const { isLoading, clients, getPage, currentPage, totalPageNumbers, totalPages }
         <PaginationNumbers 
             @value-page="getPage" 
             :current-page="currentPage" 
-            :total-page-numbers="totalPageNumbers" 
             :total-pages="totalPages"    
         />
         <!-- Loading Modal -->
