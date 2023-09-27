@@ -1,52 +1,56 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Field, Form, ErrorMessage } from 'vee-validate';
+import { ref, watch } from 'vue';
+// import { Field, Form, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 import LoadingModal from '@/shared/components/LoadingModal.vue';
-import useClient from '@/clients/composables/useClient'; 
-import { useRoute } from 'vue-router';
+import useClient from '@/clients/composables/useClient';
+import { useRoute, useRouter } from 'vue-router';
 
-const route = useRoute();
+const route     = useRoute();
+const router    = useRouter();
+const {
+    client,
+    isLoading,
+    isError,
+    updateClient,
+    isUpdatinfSuccess,
+    isUpdating
 
-const {client, isLoading } = useClient(+route.params.id);
+} = useClient(+route.params.id);
 
-const formSchema = ref({
-    fields: [
-        {
-            label: 'Tu nombre',
-            name: 'nombre',
-            as: 'input',
-            rules: yup.string().required(),
-        },
-        {
-            label: 'Tu dirección',
-            name: 'direccion',
-            as: 'input',
-            rules: yup.string().required(),
-        },
-    ]
-});
-
+watch(isError, () => {
+    if (isError.value)
+        router.replace('/clients');
+})
 
 </script>
 
 <template>
-    <h3>Guardando...</h3>
-    <h3>¡Guardado!</h3>
-    <LoadingModal v-if="isLoading"/>
-    <div>
-        <h1>JULIAN LIBARDO PALCO</h1>
-        <Form>
-            <div class="d-flex flex-column">
-                <template v-for="{as, name, label, ...attrs} in formSchema.fields" :key="index">
-                    <Field :as="as" :id="name" :name="name"  v-bind="attrs" :placeholder="label" class="text-center"/>
-                    <ErrorMessage :name="name" class="text-danger"/>
-                </template>
-                <button type="submit" class="btn btn-secondary py-1">Guardar</button>
-            </div>
-        </Form>
+    <LoadingModal v-if="isLoading" />
+    <div v-if="client" class="d-flex flex-column gap-2">
+
+        <div class="d-flex flex-column bg-white rounded px-4 py-3 ">
+            <span class="fw-bold text-dark">Info del cliente</span>
+            <span class="text-dark"><b>Nombre:</b> {{ client.name }}</span>
+            <span class="text-dark"><b>Dirección:</b> {{ client.address }}</span>
+        </div>
+
+        <h3>Actulizar información del cliente</h3>
+
+        <form class="d-flex flex-column " @submit.prevent="updateClient(client)">
+            <input class="text-center py-1 my-1" v-model="client.name" required>
+            <input class="text-center py-1 my-1" v-model="client.address" required>
+            <button 
+                class="btn btn-secondary" 
+                type="submit"
+                :disabled="isUpdating"
+            >Actualizar</button>
+        </form>
+
+        <h4 v-if="isUpdating" class="alert alert-info py-1 text-center">Guardando...</h4>
+        <h5 v-if="isUpdatinfSuccess" class="alert alert-success py-1 text-center">¡Guardado!</h5>
     </div>
     <code>
-        {{ client }}
-    </code>
+            {{ client }}
+        </code>
 </template>
